@@ -1,25 +1,44 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [count, setCount] = useState(0);
+  const [error, setError] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div data-test='component-app'>
+      <h1 data-test='counter-display'>
+        The counter&nbsp;
+        <span data-test='count'>{count}</span>
+      </h1>
+
+      <div data-test='error-message' className={error ? 'show' : 'hidden'}>
+        the counter can't go below zero
+      </div>
+
+      <button
+        data-test='increment-button'
+        onClick={() => {
+          if (error) setError(false);
+
+          setCount(count + 1);
+        }}
+      >
+        Increment counter
+      </button>
+      <button
+        data-test='decrement-button'
+        onClick={() => {
+          if (count > 0) {
+            setCount(count - 1);
+          } else {
+            setError(true);
+          }
+        }}
+      >
+        Decrement counter
+      </button>
     </div>
   );
-}
+};
 
 export default App;
